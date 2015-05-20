@@ -21,6 +21,23 @@ app.listen(port);
 
 console.log('Now connected to port ' + port);
 
+var Products = {};
+Products.formatPrice = function (products) {
+    if (products.length == undefined) {
+        products.price = (parseFloat(products.price) / 100).toString();
+        var cents = products.price.split('.')[1];
+        if (cents && cents.length === 1) {
+            products.price = products.price + '0';
+        }
+    } else {
+        products.forEach(function(product, index) {
+            products[index] = this.format(product);
+        }.bind(this));
+    }
+    return products;
+};
+
+
 app.get('/', function(req, res) {
     res.redirect('/list');
 });
@@ -32,7 +49,7 @@ app.get('/list', function(req, res) {
     request(url, function(error, response, body) {
         if (!error && response.statusCode === 200) {
             body = JSON.parse(body);
-            scope.PRODUCTS = body.products;
+            scope.PRODUCTS = Products.formatPrice(body.products);
             res.render('list', scope);
         }
     });
@@ -51,7 +68,7 @@ app.get('/list/:productId', function(req, res) {
         if (requestWasValid) {
             body = JSON.parse(body);
             if (body.product_id === req.params.productId) {
-                scope.PRODUCT = body;
+                scope.PRODUCT = Products.formatPrice(body);
                 res.render('detail', scope);
                 return;
             }

@@ -9,8 +9,12 @@
   <script src="./resources/build/app.js"></script>
 
 </head>
-<body>
-
-    <div class="foo"></div>
-    <div class="bar"></div>
+<body ng-app="app">
+    <div
+        ng-controller="Controller:ProductsList"
+        ng-cloak
+    >
+        <div>{{test}}</div>
+    </div>
+    <div></div>
 </body>

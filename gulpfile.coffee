@@ -9,15 +9,14 @@ options = {}
 paths.build = './resources/build'
 
 paths.coffee = {}
-paths.coffee.src = [
-    './resources/coffee/foo.coffee'
-    './resources/coffee/bar.coffee'
-]
+paths.coffee.src = './resources/coffee/**/*.coffee'
 
 paths.scss = {}
 paths.scss.src = './resources/scss/index.scss'
-paths.scss.options = {}
-paths.scss.options.outputStyle = 'compressed'
+paths.scss.src = './resources/scss/**/*.scss'
+
+options.scss = {}
+options.scss.outputStyle = 'compressed'
 
 options.coffee = {}
 options.coffee.base = true
@@ -32,14 +31,17 @@ options.server.livereload = false
 gulp.task 'scss:compile', ->
     gulp.src paths.scss.src
         .pipe gp.sourcemaps.init()
-            .pipe gp.sass().on 'error', gp.sass.logError
+            .pipe gp.sass(options.scss).on 'error', gp.sass.logError
         .pipe gp.sourcemaps.write('./maps')
         .pipe gulp.dest paths.build
 
 gulp.task 'coffee:compile', ->
     gulp.src paths.coffee.src
         .pipe gp.sourcemaps.init()
-            .pipe gp.coffee options.coffee
+            .pipe(gp.coffee(options.coffee)
+                .on 'error', (error) ->
+                    console.log error
+            )
             .pipe gp.uglify options.uglify
             .pipe gp.concat 'app.js'
         .pipe gp.sourcemaps.write('./maps')
@@ -51,7 +53,8 @@ gulp.task 'resources:compile', [
 ]
 
 gulp.task 'resources:watch', ->
-    gulp.watch paths.coffee.src, ['resources:compile']
+    gulp.watch paths.coffee.src, ['coffee:compile']
+    gulp.watch paths.scss.watch, ['scss:compile']
 
 gulp.task 'server', ->
     gulp.src './'

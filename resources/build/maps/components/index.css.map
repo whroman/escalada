@@ -1,0 +1,1 @@
+{"version":3,"sources":["index.scss"],"names":[],"mappings":"AAAA,IAAI,AAAC,CACD,MAAM,CAAE,IACX,CAFK","file":"components/index.css","sourcesContent":["@import \"components/index\";\n\n.foo {\n    width: 100px\n}"],"sourceRoot":"/source/"}

@@ -1,0 +1,49 @@
+doctype html
+head
+    meta(charset="utf-8")
+
+    link(rel="stylesheet" type="text/css" href="./../resources/build/index.css")
+    link(rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/foundation-essential/5.5.1/css/foundation.min.css")
+
+    script(src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.15/angular.js")
+    script(src="./../resources/build/app.js")
+    script.
+        window.products = !{ PRODUCTS ? JSON.stringify(PRODUCTS) : JSON.stringify({}) };
+
+body#body(ng-app="App:List")
+    div#media-query
+    div.spacer-lg
+    div.row.double-gutter
+        div.small-12.column(
+            ng-controller="Controller:ProductsList"
+            ng-switch="products.ajax.isLoading"
+            ng-cloak
+        )
+            div.row
+                div.small-6.medium-4.large-2.column(
+                    ng-repeat="(key, product) in products.all"
+                )
+
+                    div.row.collapse.bg-blue.round-md
+                        div.small-12.column
+
+                            div.row.bg-red.text-white
+                                div.small-12.column
+                                    div.spacer-sm
+                                    div.text-sm {{product.name}}
+                                    div.spacer-sm
+
+                            div.row.bg-gray-dark.text-white
+                                div.small-12.column
+                                    div.spacer-sm
+                                    div.text-xs ${{product.price}}
+                                    div.spacer-sm
+
+                        div.small-12.column.text-center
+                            div.spacer-md
+                            div.round-md.bg-white.pad
+                                div.square-md.round-md(
+                                    style="background-image: url('{{product.image}}')"
+                                )
+                            div.spacer-md
+                    div.spacer-lg

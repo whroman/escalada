@@ -25,7 +25,6 @@ options.uglify = {}
 options.uglify.mangle = false
 
 options.server = {}
-options.server.port = '8889'
 options.server.livereload = false
 
 gulp.task 'scss:compile', ->
@@ -52,16 +51,19 @@ gulp.task 'resources:compile', [
     'scss:compile'
 ]
 
-gulp.task 'resources:watch', ->
-    gulp.watch paths.coffee.src, ['coffee:compile']
-    gulp.watch paths.scss.watch, ['scss:compile']
-
 gulp.task 'server', ->
-    gulp.src './'
-        .pipe gp.webserver options.server
+    server = gp.liveServer ['./server.js']
+    server.start()
+
+    gulp.watch paths.coffee.src, (event) ->
+        gulp.run ['coffee:compile']
+        server.notify()
+
+    gulp.watch paths.scss.watch, (event) ->
+        gulp.run ['scss:compile']
+        server.notify()
 
 gulp.task 'default', [
-    'server',
     'resources:compile',
-    'resources:watch'
+    'server'
 ]

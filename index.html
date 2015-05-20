@@ -28,34 +28,41 @@
             >
                 <div
                     ng-repeat="(key, product) in products.all"
-                    class="small-6 medium-4 column"
+                    class="small-6 medium-4 large-2 column"
                 >
-                    <div class="row collapse">
-                        <div class="bg-blue round-md width-full">
-                            <div class="small-12 column bg-red text-white">
-                                <div class="spacer-sm"></div>
-                                <div class="text-sm">{{product.name}}</div>
-                                <div class="spacer-sm"></div>
-                            </div>
 
-                            <div class="small-12 column bg-gray-dark text-white">
-                                <div class="spacer-sm"></div>
-                                <div class="text-xs">$ {{product.price}}</div>
-                                <div class="spacer-sm"></div>
-                            </div>
+                    <div class="row collapse bg-blue round-md">
+                        <div class="small-12 column">
 
-
-                            <div class="small-12 column text-center">
-                                <div class="spacer-md"></div>
-                                <div class="round-md bg-white pad">
-                                    <div
-                                        class="square-md round-md"
-                                        style="background-image: url('{{product.image}}')"
-                                    ></div>
+                            <div class="row bg-red text-white">
+                                <div class="small-12 column">
+                                    <div class="spacer-sm"></div>
+                                    <div class="text-sm">{{product.name}}</div>
+                                    <div class="spacer-sm"></div>
                                 </div>
-                                <div class="spacer-md"></div>
                             </div>
+
+                            <div class="row bg-gray-dark text-white">
+                                <div class="small-12 column">
+                                    <div class="spacer-sm"></div>
+                                    <div class="text-xs">$ {{product.price}}</div>
+                                    <div class="spacer-sm"></div>
+                                </div>
+                            </div>
+
                         </div>
+
+                        <div class="small-12 column text-center">
+                            <div class="spacer-md"></div>
+                            <div class="round-md bg-white pad">
+                                <div
+                                    class="square-md round-md"
+                                    style="background-image: url('{{product.image}}')"
+                                ></div>
+                            </div>
+                            <div class="spacer-md"></div>
+                        </div>
+
                     </div>
                     <div class="spacer-lg"></div>
                 </div>

@@ -12,7 +12,15 @@ head
 
 body#body(ng-app="App:List")
     div#media-query
+    div.row.double-gutter.bg-green.text-white
+        div.small-12.column
+            div.spacer-xxs
+            div
+                a.text-lg.text-thin(href='/') Escalada
+            div.spacer-xxs
+
     div.spacer-lg
+
     div.row.double-gutter
         div.small-12.column(
             ng-controller="Controller:ProductsList"

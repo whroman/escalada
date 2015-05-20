@@ -2,7 +2,7 @@ extends layout
 
 block content
     div.row
-        div.small-6.medium-4.large-2.column(
+        div.small-6.medium-4.large-2.column.text-center(
             ng-repeat="(key, product) in products.all"
         )
 
@@ -15,17 +15,20 @@ block content
                             div.text-sm {{product.name}}
                             div.spacer-sm
 
+
+
+                div.small-12.column
+                    div.spacer-md
+                    div.round-md.bg-gray-xlight.pad
+                        div.square-md.round-md(
+                            style="background-image: url('{{product.image}}')"
+                        )
+                    div.spacer-md
+
+                div.small-12.column
                     div.row.bg-gray-dark.text-white
                         div.small-12.column
                             div.spacer-sm
                             div.text-xs ${{product.price}}
                             div.spacer-sm
-
-                div.small-12.column.text-center
-                    div.spacer-md
-                    div.round-md.bg-white.pad
-                        div.square-md.round-md(
-                            style="background-image: url('{{product.image}}')"
-                        )
-                    div.spacer-md
             div.spacer-lg

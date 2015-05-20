@@ -1,7 +1,7 @@
 extends layout
 
 block content
-    div.row.collapse.bg-blue.round-md
+    div.row.collapse.bg-blue.round-md.text-center
         div.small-12.column
 
             div.row.bg-red.text-white
@@ -10,17 +10,28 @@ block content
                     div.text-sm= PRODUCT.name
                     div.spacer-sm
 
+            div.row.bg-gray-xlight
+                div.small-12.column
+                    div.spacer-sm
+                    div.text-xs= PRODUCT.description
+                    div.spacer-sm
+
+        div.small-12.column
+            div.spacer-md
+            div.round-md.bg-gray-xlight.pad
+                div.square-md.round-md(
+                    style="background-image: url('#{PRODUCT.image}')"
+                )
+
+            div.spacer-md
+
+        div.small-12.column
             div.row.bg-gray-dark.text-white
                 div.small-12.column
                     div.spacer-sm
                     div.text-xs $#{PRODUCT.price}
                     div.spacer-sm
-
-        div.small-12.column.text-center
-            div.spacer-md
-            div.round-md.bg-white.pad
-                div.square-md.round-md(
-                    style="background-image: url('#{PRODUCT.image}')"
-                )
-            div.spacer-md
     div.spacer-lg
+
+
+

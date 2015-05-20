@@ -1,0 +1,17 @@
+[class*="square-"] {
+    background-size: cover;
+    background-position: 50% 50%;
+    background-repeat: no-repeat; /* 50% 50% centers image in div */
+    height: 100%;
+    width: 100%;
+    max-width: none;
+    display: inline-block;
+}
+
+$square-sizes: (
+    md: 70px,
+    lg: 100px,
+    xl: 120px
+);
+
+@include breakpoint($square-sizes, (width, height), "square");

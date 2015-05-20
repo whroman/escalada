@@ -13,7 +13,7 @@ paths.coffee.src = './resources/coffee/**/*.coffee'
 
 paths.scss = {}
 paths.scss.src = './resources/scss/index.scss'
-paths.scss.src = './resources/scss/**/*.scss'
+paths.scss.watch = './resources/scss/**/*.scss'
 
 options.scss = {}
 options.scss.outputStyle = 'compressed'

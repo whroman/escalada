@@ -6,14 +6,14 @@ gp = do require 'gulp-load-plugins'
 paths = {}
 options = {}
 
-paths.build = './resources/build'
+paths.build = './../client/build'
 
 paths.coffee = {}
-paths.coffee.src = './resources/coffee/**/*.coffee'
+paths.coffee.src = './../client/coffee/**/*.coffee'
 
 paths.scss = {}
-paths.scss.src = './resources/scss/index.scss'
-paths.scss.watch = './resources/scss/**/*.scss'
+paths.scss.src = './../client/scss/index.scss'
+paths.scss.watch = './../client/scss/**/*.scss'
 
 options.scss = {}
 options.scss.outputStyle = 'compressed'
@@ -46,13 +46,14 @@ gulp.task 'coffee:compile', ->
         .pipe gp.sourcemaps.write('./maps')
         .pipe gulp.dest paths.build
 
-gulp.task 'resources:compile', [
+gulp.task 'client:compile', [
     'coffee:compile'
     'scss:compile'
 ]
 
 gulp.task 'server', ->
-    server = gp.liveServer ['./server.js']
+    process.chdir('./server')
+    server = gp.liveServer ['./app.js']
     server.start()
 
     gulp.watch paths.coffee.src, (event) ->
@@ -64,6 +65,6 @@ gulp.task 'server', ->
         server.notify()
 
 gulp.task 'default', [
-    'resources:compile',
+    'client:compile',
     'server'
 ]

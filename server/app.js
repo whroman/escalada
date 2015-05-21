@@ -3,13 +3,19 @@ var request = require('request');
 
 var port = 3000;
 
+// If file is not being executed from within /server, programmatically chdir into /server
+var curDir = process.cwd().split('/').pop();
+if (curDir !== 'server') process.chdir('./server');
+
 var addStaticPath = function(path) {
     return express["static"](process.cwd() + path);
 };
 
 app = express();
 
-app.use("/resources", addStaticPath('/resources'));
+console.log(process.cwd())
+
+app.use("/client", addStaticPath('./../client'));
 
 app.set('views', './views');
 
@@ -50,7 +56,11 @@ app.get('/list', function(req, res) {
         if (!error && response.statusCode === 200) {
             body = JSON.parse(body);
             scope.PRODUCTS = Products.formatPrice(body.products);
-            res.render('list', scope);
+            scope.PRODUCTS.forEach(function(product) {
+                product.detailGetURL = 'https://s3-eu-west-1.amazonaws.com/developer-application-test/cart/' + product.product_id+ '/detail';
+                product.detailPageURL = '/list/' + product.product_id;
+            });
+            res.render('pages/products-list', scope);
         }
     });
 });
@@ -69,7 +79,7 @@ app.get('/list/:productId', function(req, res) {
             body = JSON.parse(body);
             if (body.product_id === req.params.productId) {
                 scope.PRODUCT = Products.formatPrice(body);
-                res.render('detail', scope);
+                res.render('pages/product-detail', scope);
                 return;
             }
         }

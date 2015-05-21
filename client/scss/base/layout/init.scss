@@ -27,4 +27,12 @@ body {
     .scrollable {
         overflow: auto;
     }
+
+    .valign-top > * {
+        vertical-align: top;
+    }
+
+    .valign-mid > * {
+        vertical-align: middle;
+    }
 }

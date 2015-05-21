@@ -1,0 +1,45 @@
+div.page-column.modal-wrapper(
+    ng-if="modal.isOpen == true"
+)
+    div.modal-bg(
+      ng-click="modal.close()"
+    )
+
+    div.modal(
+        ng-switch="modal.isLoading"
+    )
+        div.row(ng-switch-when="false")
+            div.small-6.column.text-left
+                div.spacer-xs
+                h2.text-thin {{modal.data.name}}
+                div.spacer-xs
+            div.small-6.column
+                h2.pad-lr.pull-right.text-gray.text-gray-dark-hover(
+                    ng-click="modal.close()"
+                )
+                    i.fa.fa-times
+
+            div.small-12.column
+                div.spacer-1.bg-gray-dark
+                div.spacer-xs
+                div.clearfix
+                    div.left
+                        div.round-md.bg-blue.pad
+                            div.square-lg.round-md(
+                                style="background-image: url('{{modal.data.image}}')"
+                            )
+                    div.left.text-sm.pad-l
+                        div.valign-top(ng-if="modal.data.description")
+                            i.fa.fa-quote-left.text-xxs
+                            span &nbsp;{{modal.data.description}}
+                            i.fa.fa-quote-right.text-xxs
+                        div.spacer-xs
+                        div &#8364;{{modal.data.price}}
+        div.row.text-center.valign-top(ng-switch-default)
+            div.pad-b.text-sm
+                i.fa.fa-gear.fa-spin
+            div.pad-t.text-lg
+                i.fa.fa-gear.fa-spin
+            div.pad-l.text-md
+                i.fa.fa-gear.fa-spin
+

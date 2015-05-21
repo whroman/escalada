@@ -1,48 +1,42 @@
+// If file is not being executed from within /server, programmatically chdir into /server
+(function() {
+    var curDir = process.cwd().split('/').pop();
+    if (curDir !== 'server') process.chdir('./server');
+})();
+
+// Third-party libs
 var express = require('express');
 var request = require('request');
 
-var port = 3000;
+// Custom scripts
+var Product = require('./scripts/Product');
+var Products = require('./scripts/Products');
 
-// If file is not being executed from within /server, programmatically chdir into /server
-var curDir = process.cwd().split('/').pop();
-if (curDir !== 'server') process.chdir('./server');
 
-var addStaticPath = function(path) {
-    return express["static"](process.cwd() + path);
-};
-
-app = express();
-
-console.log(process.cwd())
-
-app.use("/client", addStaticPath('./../client'));
-
+// Bootstrap app
+var app = express();
 app.set('views', './views');
-
 app.set('view engine', 'jade');
-
 app.locals.pretty = true;
-
+var port = 3000;
 app.listen(port);
-
 console.log('Now connected to port ' + port);
 
-var Products = {};
-Products.formatPrice = function (products) {
-    if (products.length == undefined) {
-        products.price = (parseFloat(products.price) / 100).toString();
-        var cents = products.price.split('.')[1];
-        if (cents && cents.length === 1) {
-            products.price = products.price + '0';
-        }
-    } else {
-        products.forEach(function(product, index) {
-            products[index] = this.formatPrice(product);
-        }.bind(this));
-    }
-    return products;
-};
+// Add paths for serving static content
+(function() {
+    function addStaticPath (path) {
+        return express["static"](process.cwd() + path);
+    };
 
+    app.use("/client", addStaticPath('./../client'));
+})();
+
+function requestIsValid (err, res) {
+    return (
+        !err &&
+        res.statusCode === 200
+    );
+}
 
 app.get('/', function(req, res) {
     res.redirect('/list');
@@ -53,13 +47,9 @@ app.get('/list', function(req, res) {
     scope = {};
     var url = 'https://s3-eu-west-1.amazonaws.com/developer-application-test/cart/list';
     request(url, function(error, response, body) {
-        if (!error && response.statusCode === 200) {
+        if (requestIsValid(error, response)) {
             body = JSON.parse(body);
-            scope.PRODUCTS = Products.formatPrice(body.products);
-            scope.PRODUCTS.forEach(function(product) {
-                product.detailGetURL = 'https://s3-eu-west-1.amazonaws.com/developer-application-test/cart/' + product.product_id+ '/detail';
-                product.detailPageURL = '/list/' + product.product_id;
-            });
+            scope.PRODUCTS = (new Products(body.products)).all;
             res.render('pages/products-list', scope);
         }
     });
@@ -70,15 +60,10 @@ app.get('/list/:productId', function(req, res) {
     scope = {};
     var url = 'https://s3-eu-west-1.amazonaws.com/developer-application-test/cart/' + req.params.productId + '/detail'
     request(url, function(error, response, body) {
-        var requestWasValid = (
-            !error &&
-            response.statusCode === 200
-        );
-
-        if (requestWasValid) {
+        if (requestIsValid(error, response)) {
             body = JSON.parse(body);
             if (body.product_id === req.params.productId) {
-                scope.PRODUCT = Products.formatPrice(body);
+                scope.PRODUCT = new Product(body);
                 res.render('pages/product-detail', scope);
                 return;
             }

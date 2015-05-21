@@ -1,7 +1,19 @@
 var Format = {};
+
+function isInteger(nVal) {
+    return (
+        typeof nVal === 'number' &&
+        isFinite(nVal) &&
+        nVal > -9007199254740992 &&
+        nVal < 9007199254740992 &&
+        Math.floor(nVal) === nVal
+    );
+}
+
+
 Format.price = function (price) {
     var isString = typeof price === 'string';
-    var isNum = Number.isInteger(price);
+    var isNum = isInteger(price);
 
     if (!isString && !isNum) throw ".price(arg) - `arg` must be String or Number";
 

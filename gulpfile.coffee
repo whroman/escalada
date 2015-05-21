@@ -53,7 +53,7 @@ gulp.task 'client:compile', [
 
 gulp.task 'server', ->
     process.chdir('./server')
-    server = gp.liveServer ['./app.js']
+    server = gp.liveServer ['./index.js']
     server.start()
 
     gulp.watch paths.coffee.src, (event) ->

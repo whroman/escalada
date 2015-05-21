@@ -18,11 +18,6 @@ angular
         for product in $window.products
             $scope.products.set product.product_id, product
 
-    # Dev
-    $window.logScope = ->
-        $window.$scope = $scope
-        console.log $scope
-
     # Detail modal
     $scope.modal = {}
     $scope.modal.data = null
@@ -30,14 +25,12 @@ angular
     $scope.modal.isOpen = false
     $scope.modal.open = (productId) ->
         product = $scope.products.get productId
-        console.log productId, product
         @isOpen = true
         @isLoading = true
         $http.get product.detailGetURL
             .success (data, status, headers, config) =>
                 @data = data
                 @isLoading = false
-                console.log data
 
     $scope.modal.close = ->
         this.data = null

@@ -14,7 +14,7 @@ var Product = (function() {
         this.detailPageURL = [
             '/list/',
             this.product_id
-        ].join();
+        ].join('');
     }
 
     return Product;

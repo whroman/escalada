@@ -3,6 +3,7 @@ $pad: 0.5em;
 %pad {
     display: inline-block;
 }
+
 html {
     @each $key, $val in $dirs {
         .pad-#{$key} {
@@ -44,5 +45,10 @@ html {
     .pad-2x {
         @extend .pad-lr-2x;
         @extend .pad-tb-2x;
+    }
+
+    .pad-none {
+        @extend %pad;
+        padding: 0;
     }
 }

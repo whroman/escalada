@@ -31,7 +31,7 @@ Products.formatPrice = function (products) {
         }
     } else {
         products.forEach(function(product, index) {
-            products[index] = this.format(product);
+            products[index] = this.formatPrice(product);
         }.bind(this));
     }
     return products;

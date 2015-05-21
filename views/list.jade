@@ -1,12 +1,13 @@
 extends layout
 
 block content
+    div {{util.mediaQuery.get()}}
     div.row
         div.small-6.medium-4.large-2.column.text-center(
             ng-repeat="(key, product) in products.all"
         )
 
-            div.row.collapse.bg-blue.round-md
+            a.row.collapse.bg-blue.round-md(ng-click="product.click()")
                 div.small-12.column
 
                     div.row.bg-red.text-white

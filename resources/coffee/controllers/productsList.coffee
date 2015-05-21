@@ -1,6 +1,7 @@
 angular
 .module('Controller:ProductsList', [
     'Collection:Products'
+    'Util'
 ])
 .controller 'Controller:ProductsList', (
 # Dependency Injections
@@ -8,7 +9,9 @@ angular
     $window
     $http
     CollectionProducts
+    Util
 ) ->
+    $scope.util = Util
     $scope.products = new CollectionProducts
 
     if $window.products

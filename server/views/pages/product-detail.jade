@@ -22,16 +22,17 @@ block content
                     div.spacer-md
 
                 div.small-12.column
-                    div.row.bg-gray-xlight
-                        div.small-12.column
-                            div.spacer-sm
-                            div.text-xs= PRODUCT.description
-                            div.spacer-sm
+                    if PRODUCT.description
+                        div.row.bg-gray-xlight
+                            div.small-12.column
+                                div.spacer-sm
+                                div.text-xs= PRODUCT.description
+                                div.spacer-sm
 
                     div.row.bg-gray-dark.text-white
                         div.small-12.column
                             div.spacer-sm
-                            div.text-xs &#8364;#{PRODUCT.price}
+                            div.text-xs &#8364; #{PRODUCT.price}
                             div.spacer-sm
     div.spacer-lg
 

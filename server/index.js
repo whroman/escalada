@@ -18,7 +18,7 @@ var app = express();
 app.set('views', './views');
 app.set('view engine', 'jade');
 app.locals.pretty = true;
-var port = 3000;
+var port = 4000;
 app.listen(port);
 console.log('Now connected to port ' + port);
 
